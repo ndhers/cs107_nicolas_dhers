@@ -8,22 +8,19 @@ class Regression():
         return self.params
 
     def set_params(self, **kwargs):
-        for arg in kwargs:
-            self.params[arg] = kwargs[arg]
+        for i in kwargs:
+            self.params[i] = kwargs[i]
 
     def fit(self, X, y):
         raise NotImplementedError
 
     def predict(self, X):
-        y_hat = np.dot(X, self.params['coefficients']) + self.params['intercept']
-        return y_hat
+        y_pred = np.dot(X, self.params['coefficients']) + self.params['intercept']
+        return y_pred
 
     def score(self, X, y):
-        SST = np.sum((y - np.mean(y))*(y - np.mean(y)))
-        y_hat = self.predict(X)
-        SSE = np.sum((y - y_hat)*(y - y_hat))
-        r_square = 1 - SSE / SST
-        return r_square
+        y_pred = self.predict(X)
+        return 1 - (np.sum((y-y_pred)**2))/(np.sum((y-np.mean(y))**2))
 
 
 class LinearRegression(Regression):
@@ -31,13 +28,14 @@ class LinearRegression(Regression):
         X = np.append(X, np.ones((X.shape[0], 1)), axis=1)
         beta = np.dot(np.linalg.pinv(np.dot(X.T, X)), np.dot(X.T, y))
         self.params['intercept'] = beta[-1]
-        self.params['coefficients'] = beta[:-1]
+        self.params['coefficients'] = beta[0:-1]
 
 
 class RidgeRegression(LinearRegression):
     def fit(self, X, y):
         X = np.append(X, np.ones((X.shape[0], 1)), axis=1)
-        gamma = np.identity(X.shape[1]) * self.params['alpha']
-        beta = np.dot(np.linalg.pinv(np.dot(X.T, X) + np.dot(gamma.T, gamma)), np.dot(X.T, y))
+        gamma = np.identity(X.shape[1])*self.params['alpha']
+        beta = np.dot(np.linalg.pinv(np.dot(X.T, X)+np.dot(gamma.T, gamma)), np.dot(X.T, y))
         self.params['intercept'] = beta[-1]
-        self.params['coefficients'] = beta[:-1]
+        self.params['coefficients'] = beta[0:-1]
+
