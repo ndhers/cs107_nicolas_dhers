@@ -28,3 +28,15 @@ for i,model in enumerate(models):
 
 print(f"The best model obtained was: {model_best_str}.\n\
 And the corresponding parameters are: \n{model_best.get_params()}")
+
+'''
+Output:
+For linear_rg, the testing R-squared is: 0.5757877060334111.
+
+For ridge_rg, the testing R-squared is: 0.578392070440312.
+
+The best model obtained was: ridge_rg.
+And the corresponding parameters are: 
+{'alpha': 0.1, 'intercept': -32.26420076980557, 'coefficients': array([ 4.43015612e-01,  1.05771603e-02, -1.09702884e-01,  6.91938080e-01,
+        1.06777372e-06, -3.56285421e-03, -3.69189562e-01, -3.78988653e-01])}
+'''
