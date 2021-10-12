@@ -30,12 +30,17 @@ class LinearRegression(Regression):
         self.params['intercept'] = beta[-1]
         self.params['coefficients'] = beta[0:-1]
 
-
 class RidgeRegression(LinearRegression):
     def fit(self, X, y):
-        X = np.append(X, np.ones((X.shape[0], 1)), axis=1)
-        gamma = np.identity(X.shape[1])*self.params['alpha']
-        beta = np.dot(np.linalg.pinv(np.dot(X.T, X)+np.dot(gamma.T, gamma)), np.dot(X.T, y))
-        self.params['intercept'] = beta[-1]
-        self.params['coefficients'] = beta[0:-1]
-
+        Xmean = np.mean(X, axis=0)
+        scale = 1 / np.sqrt(np.sum((X - Xmean)**2, axis=0))
+        Xs = X * scale
+        X1 = np.append(np.ones((Xs.shape[0], 1)), Xs, axis=1)
+        gamma = self.params['alpha']*np.identity(X1.shape[1])
+        gamma[0,0] = 0
+        beta = np.linalg.pinv(X1.T.dot(X1) + gamma.T.dot(gamma)).dot(X1.T).dot(y)
+        intercept = beta[0]
+        beta = beta[1:] * scale
+        self.params['intercept'] = intercept
+        self.params['coefficients'] = beta
+        
