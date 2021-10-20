@@ -25,7 +25,7 @@ plt.title('Comparison of finite differences and exact derivative for $ln(x)$')
 plt.legend()
 # plt.savefig('P1_fig.png')
 
-print("Answer to Q-a: the value of 1e-7 most closely approximate the true derivative.\
+print("Answer to Q-a: the value of 1e-7 most closely approximates the true derivative.\
 	When h is too small, rounding error occurs when we take the difference of two very similar\
 	numbers f(x+h) and f(x). This error is also known as subtractive cancellation error,\
 	and is due to finite computer arithmetics. It is shown here with the h=1e-15 case.\
@@ -37,7 +37,7 @@ print("Answer to Q-b: In AD, we break down the original function into child func
 	which are analytically computed and combined through simple arithmetic operations.\
 	By taking individual analytical derivatives of these composite functions and using\
 	chain rule, we can reconstruct the original function's derivative without having induced\
-	any truncation or substantial round-off errors like is the case with finite differences.\
+	any truncation or substantial round-off errors like in the case of finite differences.\
 	We therefore end up with an exact derivative evaluation through correct use of AD.")
 # plt.show()
 
