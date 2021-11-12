@@ -30,5 +30,6 @@ for candidate in candidates:
 
 db.commit()
 cursor.execute("SELECT * FROM candidates")
-for i in cursor:
-    print(i)
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
